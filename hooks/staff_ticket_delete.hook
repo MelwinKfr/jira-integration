@@ -1,0 +1,50 @@
+<?php
+/**
+ * ###############################################
+ *
+ * SWIFT Framework
+ * _______________________________________________
+ *
+ * @author         Varun Shoor
+ *
+ * @package        SWIFT
+ * @copyright      Copyright (c) 2001-2015, Kayako
+ * @license        http://www.kayako.com/license
+ * @link           http://www.kayako.com
+ *
+ * ###############################################
+ */
+
+/**
+ * The hook gets called once the ticket delete action is performed
+ * We use it to delete entry from 'jiraissues' table for respective ticket
+ *
+ * @author Amarjeet Kaur
+ */
+
+if (SWIFT_App::IsInstalled(APP_JIRA)) {
+
+	$_SWIFT = SWIFT::GetInstance();
+	SWIFT_Loader::LoadLibrary('JIRA:JIRABridge', APP_JIRA);
+	$_JIRABridge = SWIFT_JIRABridge::GetInstance();
+
+	if (_is_array($_ticketIDList)) {
+		if ($_JIRABridge && $_JIRABridge instanceof SWIFT_JIRABridge && $_JIRABridge->GetIsClassLoaded()) {
+			foreach ($_ticketIDList as $_ticketID) {
+				$_JIRAIssuesContainer = $_JIRABridge->GetIssuesBy('ticketid', $_ticketID);
+				if (_is_array($_JIRAIssuesContainer)) {
+					foreach ($_JIRAIssuesContainer as $_JIRAIssue) {
+						$_issueKey = $_JIRAIssue->GetKey();
+						$_JIRABridge->UnlinkIssue($_issueKey, $_ticketID);
+					}
+				}
+			}
+		} else {
+			if ($_SWIFT->Settings->Get('bj_isenabled')) {
+				SWIFT::Notify(SWIFT::NOTIFICATION_ERROR, $_JIRABridge->GetErrorMessage());
+			}
+		}
+	}
+}
+
+?>
