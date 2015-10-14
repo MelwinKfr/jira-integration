@@ -20,6 +20,19 @@ Features
 * Can post comment for issue from Helpdesk.
 * Can unlink any ticket from JIRA issue from Helpdesk.
 
+Installation
+=======================
+1. Download and extract zip file of JIRA app.
+2. Move the src folder to helpdesk_installation/__apps folder.
+3. Rename the src folder to jira and make sure all files of src folder are available under helpdesk_installation/__apps/jira
+4. Now go to Admin Panel of your helpdesk and click on ‘Apps’ in left side menu.
+5. Now click on JIRA app and you can see the details regarding this app. Click on ‘Install button’ for JIRA app installation.
+6. Now JIRA is installed in your helpdesk. If you want to uninstall it, then simply click on ‘Uninstall’ button.
+7. Click on ‘JIRA’ under ‘settings’ in left side menu. Enter your JIRA settings and click on ‘update’ to save JIRA details.
+8. Go to your staff panel and create a new ticket. Once you have created a ticket, you can see ‘JIRA’ in above menu.
+
+Installation Wiki: https://forge.kayako.com/projects/jira/wiki/Wiki
+
 Supported versions
 =======================
 * Kayako: 4.51.1891 and above
