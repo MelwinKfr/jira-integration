@@ -24,7 +24,7 @@ if ($_SWIFT->Settings->Get('bj_isenabled')) {
 	if ($_JIRABridge && $_JIRABridge instanceof SWIFT_JIRABridge && $_JIRABridge->GetIsClassLoaded()) {
 
 		//Add the toolbar button
-		$this->UserInterface->Toolbar->AddButton($this->Language->Get('tabjira'), SWIFT::Get('swiftpath') . SWIFT_APPSDIRECTORY . '/jira/resources/postbugtojira_b.gif', 'UIDropDown(\'jiramenu\', event, \'jira\', \'tabtoolbartable\');', SWIFT_UserInterfaceToolbar::LINK_JAVASCRIPT, 'jira');
+		$this->UserInterface->Toolbar->AddButton($this->Language->Get('tabjira'), SWIFT::Get('swiftpath') . SWIFT_APPSDIRECTORY . '/jira/resources/postbugtojira_b.gif', 'UIDropDown(\'jiramenu\', event, \'jira\', \'tabtoolbartable\');', SWIFT_UserInterfaceToolbar::LINK_JAVASCRIPT, 'jira', '', '', '', false);
 
 		$_issuesContainer = $_JIRABridge->GetIssuesBy('ticketid', $_SWIFT_TicketObject->GetTicketID());
 
