@@ -27,23 +27,13 @@ if ($_JIRABridge && $_JIRABridge instanceof SWIFT_JIRABridge && $_JIRABridge->Ge
 
 	if (_is_array($_issuesContainer)) {
 
-		foreach ($_issuesContainer as $_Issue) {
-			$_issueKey          = $_Issue->GetKey();
-			$_responseContainer = $_JIRABridge->GetRemoteLinks($_issueKey, $_SWIFT_TicketObject->GetTicketID());
-
-			if ($_responseContainer['errorMessages'][0] == $this->Language->Get('jira_noremotelink')) {
-				$this->Database->Execute('DELETE FROM ' . TABLE_PREFIX . SWIFT_JIRABridge::$_tableName . '
-											  WHERE issuekey=\'' . $_issueKey . '\'');
-			}
-		}
-
 		$_issuesContainer = $_JIRABridge->GetIssuesBy('ticketid', $_SWIFT_TicketObject->GetTicketID());
 
 		$_informationHTML .= '<div class="ticketinfoitem jiraIssueInfo"><div class="ticketinfoitemtitle">' . $this->Language->Get('JIRATicketID') . '</div>';
-
-		if (_is_array($_issuesContainer)) {
-			foreach ($_issuesContainer as $_JIRAIssue) {
-				$_informationHTML .= '<div class="ticketinfoitemlink" id="' . $_JIRAIssue->GetKey() . '"><a href="' . $_baseURL . 'browse/' . $_JIRAIssue->GetKey() . '" target="_blank">' . $_JIRAIssue->GetKey() . '</a></div>';
+		
+		foreach ($_issuesContainer as $_Issue) {
+			if ($_Issue instanceof SWIFT_JIRAIssueManager) {
+                		$_informationHTML .= '<div class="ticketinfoitemlink" id="' . $_Issue->GetKey() . '"><a href="' . $_baseURL . 'browse/' . $_Issue->GetKey() . '" target="_blank">' . $_Issue->GetKey() . '</a></div>';
 			}
 		}
 
